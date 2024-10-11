@@ -13,6 +13,7 @@ from subprocess import Popen
 from threading import Thread
 import asyncio
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+import threading
 
 loop = asyncio.get_event_loop()
 
