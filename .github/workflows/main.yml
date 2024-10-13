@@ -1,0 +1,37 @@
+name: Monitor and Restart Codespace
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # Runs every minute
+
+jobs:
+  monitor-codespace:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Codespace status
+      id: check_status
+      env:
+        TOKEN: ${{ secrets.MY_PAT_TOKEN }}  # Use the custom secret name here
+        CODESPACE_NAME: "vigilant-goggles-q77w79j4gjxrh9r9x"  # Replace with your Codespace name
+      run: |
+        echo "Checking Codespace status..."
+        
+        STATUS=$(curl -s \
+          -H "Authorization: token $TOKEN" \
+          https://api.github.com/user/codespaces/$CODESPACE_NAME \
+          | jq -r '.state')
+        
+        echo "Codespace Status: $STATUS"
+        echo "::set-output name=status::$STATUS"
+
+    - name: Restart Codespace if stopped
+      if: steps.check_status.outputs.status == 'Stopped'
+      env:
+        TOKEN: ${{ secrets.MY_PAT_TOKEN }}  # Use the custom secret name here
+        CODESPACE_NAME: "your-codespace-name"  # Replace with your Codespace name
+      run: |
+        echo "Restarting stopped Codespace..."
+        curl -X POST \
+          -H "Authorization: token $TOKEN" \
+          https://api.github.com/user/codespaces/$CODESPACE_NAME/start
