@@ -18,7 +18,7 @@ jobs:
 
       - name: Authenticate GitHub CLI with Personal Access Token
         run: |
-          echo "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" | gh auth login
+          echo "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" | gh auth login
 
       - name: Check Codespace Status and Keep Alive
         run: |
