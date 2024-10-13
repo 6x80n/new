@@ -2,7 +2,7 @@ name: Auto Restart and Keep Codespace Active
 
 on:
   schedule:
-    - cron: '1* * * * *'  # Runs every minute
+    - cron: '* * * * *'  # Runs every minute
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
 
       - name: Authenticate GitHub CLI with Personal Access Token
         run: |
-          echo "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" | gh auth login --with-token
+          echo "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" | gh auth login
 
       - name: Check Codespace Status and Keep Alive
         run: |
